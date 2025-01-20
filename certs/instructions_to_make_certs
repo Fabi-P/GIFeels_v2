@@ -1,5 +1,39 @@
-Run the following terminal commands:
+Navigate to the certs folder from your terminal and run the following commands
 
-$ pip install pyopenssl
 
-openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+`openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365`
+
+Once your pem files have been created and added to the certs folder, ensure that both file names are included in the .gitignore.
+
+
+If OpenSSL is not installed on your machine:
+
+- with Chocolatey (Windows):
+
+1. Open Command Prompt as Administrator:
+    Search for "cmd" in the Start Menu, right-click on "Command Prompt", and select "Run as administrator".
+2. Install OpenSSL using Chocolatey:
+    Run the following command to install OpenSSL:
+    `choco install openssl`
+3. Verify the Installation:
+    `openssl version`
+4. Follow the instructions at the top of this page
+
+
+- without Chocolatey (Windows):
+1. Download OpenSSL:
+    - Go to the OpenSSL for Windows download page.
+    - Download the appropriate installer for your system (e.g., Win64 OpenSSL v1.1.1).
+2. Run the Installer:
+    - Run the downloaded installer and follow the installation instructions.
+    - During installation, make sure to select the option to copy OpenSSL DLLs to the Windows system directory.
+3. Add OpenSSL to System PATH:
+    - Open the Start Menu and search for "Environment Variables".
+    - Click on "Edit the system environment variables".
+    - In the System Properties window, click on the "Environment Variables" button.
+    - In the Environment Variables window, find the "Path" variable in the "System variables" section and select it, then click "Edit".
+    - Click "New" and add the path to the OpenSSL bin directory (e.g., C:\Program Files\OpenSSL-Win64\bin).
+    - Click "OK" to close all windows.
+4. Verify the Installation:
+    `openssl version`
+5. Follow the instructions at the top of this page

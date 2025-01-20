@@ -71,11 +71,29 @@ erDiagram
 
 
 - A virtual environment on your IDE to install requirements from requirements.txt
-- Install and activate Redis server using the following commands (for Homebrew):
+- Install and activate Redis server using the following commands
+
+With Homebrew:
 
 `brew install redis`
 
 `brew services start redis`
+
+
+With Chocolatey:
+
+`choco install redis-64`
+
+`redis-server`
+
+
+For Windows (without Chocolatey):
+
+1. Download Redis from the [Redis download page](https://github.com/microsoftarchive/redis/releases).
+2. Extract the ZIP file to a directory of your choice.
+3. Run Redis Server by navigating to the directory where you extracted Redis and running:
+   ```sh
+   redis-server.exe
 
 - MySQL Workbench for the database (or equivalent)
 - A developer API key from the [Giphy developers website](https://developers.giphy.com/)
@@ -103,7 +121,7 @@ erDiagram
 <br> 
 
 
-1. Create a new file at root level called .env. Copy and paste the template from [template_env](/template_env) and add your GIPHY API key, Google Auth Client Id, Key and Domain, MySQL user and password where indicated. (Using .env will keep your personal information secure)
+1. Create a new file at root level called .env. Copy and paste the template from [template_env](/template_env) and add your GIPHY API key, Google Auth Client Id and Key, MySQL user and password where indicated. Create a secret key by running the file [generate_secret_key.py](/app/utils/generate_secret_key.py). (Using .env will keep your personal information secure)
 2. Create and activate a virtual environment, then install all requirements from [requirements.txt](/requirements.txt)
 3. Set up an SSL certificate using the terminal commands below (providing information when prompted), and save these in the directory [certs](/certs). Check these are correctly added to your .gitignore.
 

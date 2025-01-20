@@ -4,6 +4,6 @@ SECRET_KEY=
 
 GOOGLE_CLIENT_SECRET=
 GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_DOMAIN=
+GOOGLE_CLIENT_DOMAIN="accounts.google.com"
 
 CONNECTION_STRING="mysql+mysqlconnector://<username>:<password>@<hostname>/mood_tracker"
