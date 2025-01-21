@@ -171,4 +171,5 @@ csr.pem
 private.pem
 cert.pem
 key.pem
+cert.der
 
