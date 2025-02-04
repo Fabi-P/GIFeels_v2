@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, Blueprint, current_app
 
 
-error = Blueprint('eroor', __name__)
+error = Blueprint('error', __name__)
 
 @error.errorhandler(429)
 def error_handler(error):

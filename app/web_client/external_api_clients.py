@@ -85,7 +85,7 @@ class MoodAPI(APIRequest):
             list = clean_response['data']
             item = list[0]
             gif_url_mp4 = item['images']['fixed_width']['mp4']
-            gif_url_gif = item['image']['fixed_width']['url']
+            gif_url_gif = item['images']['fixed_width']['url']
         except Exception as e:
             print('MoodAPI: ', e)
             mood = self.params['q']

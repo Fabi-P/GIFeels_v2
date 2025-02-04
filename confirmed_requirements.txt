@@ -1,0 +1,16 @@
+flask
+sqlalchemy
+Flask-WTF
+Flask-SQLAlchemy
+Flask-Cors
+Flask-Migrate
+WTForms
+python-dotenv
+requests
+redis
+Authlib
+Flask-Bcrypt
+Flask-Limiter
+waitress
+mysql-connector-python
+alembic
