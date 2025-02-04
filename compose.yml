@@ -35,6 +35,7 @@ services:
 
   app:
     container_name: app
+    image: fabipal/gifeels-app
     build:
       context: .
     environment:
