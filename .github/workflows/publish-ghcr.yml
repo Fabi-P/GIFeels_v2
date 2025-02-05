@@ -104,6 +104,17 @@ jobs:
 
           echo "IMAGE_REPO=${{ env.image_repository_name }}" >> .env
           echo "RELEASE_VERSION=${{ env.TAG_NAME }}" >> .env
+
+          echo "GIPHY_API_KEY=${{ secrets.GIPHY_API_KEY }}" >> .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_DOMAIN='accounts.google.com'" >> .env
+          echo "REDIS_HOST='localhost'" >> .env
+          echo "STORAGE_URI='redis://127.0.0.1:6379'" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          echo "CONNECTION_STRING_DOCKER='mysql+mysqlconnector://root:${{ secrets.MYSQL_ROOT_PASSWORD }}@mysql/mood_tracker'" >> .env
+          echo "ENVIRONMENT='PRODUCTION'" >> .env
       
       # Copy docker-compose and .env files to target server
       - name: copy files to target server via scp
@@ -122,23 +133,13 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5
         env:
           APPTOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
-          GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_DOMAIN: 'accounts.google.com'
-          REDIS_HOST: 'localhost'
-          STORAGE_URI: "redis://127.0.0.1:6379"
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          CONNECTION_STRING_DOCKER: 'mysql+mysqlconnector://root:${{ secrets.MYSQL_ROOT_PASSWORD }}@mysql/mood_tracker'
-          ENVIRONMENT: 'PRODUCTION'
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}   
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
-          envs: APPTOKEN,USERNAME,GIPHY_API_KEY,SECRET_KEY,GOOGLE_CLIENT_SECRET,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_DOMAIN,REDIS_HOST,STORAGE_URI,MYSQL_ROOT_PASSWORD,CONNECTION_STRING_DOCKER,ENVIRONMENT
+          envs: APPTOKEN,USERNAME
           script: |
             echo $APPTOKEN | docker login ghcr.io -u $USERNAME --password-stdin
             cd ~/.deploy/${{ github.event.repository.name }}
