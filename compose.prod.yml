@@ -1,0 +1,62 @@
+services:
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - private
+
+
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: mood_tracker
+    healthcheck:
+      test: mysql --host=mysql --user="root" --password="${MYSQL_ROOT_PASSWORD}" --silent --execute "USE mood_tracker;"
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - private
+
+  app:
+    container_name: app
+    image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
+    restart: always
+    environment:
+      GIPHY_API_KEY: ${GIPHY_API_KEY}
+      SECRET_KEY: ${SECRET_KEY}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_DOMAIN: ${GOOGLE_CLIENT_DOMAIN}
+      REDIS_HOST: 'redis'
+      STORAGE_URI: 'redis://redis:6379/0'
+      CONNECTION_STRING: ${CONNECTION_STRING_DOCKER}
+      ENVIRONMENT: 'PRODUCTION'
+    depends_on:
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    networks:
+      - private
+      - public
+
+
+volumes:
+  mysql:
+
+networks:
+  public:
+  private:
+    driver: bridge
