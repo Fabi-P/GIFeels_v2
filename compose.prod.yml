@@ -4,8 +4,6 @@ services:
     image: redis:latest
     restart: always
     container_name: redis
-    # ports:
-    #   - "6379:6379"
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 10s
@@ -21,8 +19,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: mood_tracker
-    # ports:
-    #   - "3307:3306"
     healthcheck:
       test: mysql --host=mysql --user="root" --password="${MYSQL_ROOT_PASSWORD}" --silent --execute "USE mood_tracker;"
       interval: 10s
@@ -35,9 +31,8 @@ services:
 
   app:
     container_name: app
-    image: fabipal/gifeels-app
-    build:
-      context: .
+    image: ghcr.io/${IMAGE_REPO}:${RELEASE_VERSION}
+    restart: always
     environment:
       GIPHY_API_KEY: ${GIPHY_API_KEY}
       SECRET_KEY: ${SECRET_KEY}
@@ -53,27 +48,8 @@ services:
         condition: service_healthy
       mysql:
         condition: service_healthy
-    # ports:
-    #   - "8000:8000"
     networks:
       - private
-      - public
-
-
-  nginx:
-    container_name: nginx.conf
-    image: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - app
-    volumes:
-      - ./services/nginx.conf:/etc/nginx/nginx.conf
-      - ./certs/cert.pem:/etc/ssl/certificate.pem
-      - ./certs/key.pem:/etc/ssl/private.pem
-    networks:
       - public
 
 
