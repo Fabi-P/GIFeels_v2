@@ -168,15 +168,17 @@ cython_debug/
 
 
 
-certificate.pem
-csr.pem
-private.pem
+certs/
+services/
 
 .DS_Store
-
+*.md
 .github/
 documentation/
 .gitignore
-README.md
 template_env.txt
 unit_tests/
+
+*.yml
+
+requirements.txt
