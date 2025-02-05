@@ -16,6 +16,7 @@ services:
   mysql:
     container_name: mysql
     image: mysql:8
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: mood_tracker
@@ -41,6 +42,7 @@ services:
       GOOGLE_CLIENT_DOMAIN: ${GOOGLE_CLIENT_DOMAIN}
       REDIS_HOST: 'redis'
       STORAGE_URI: 'redis://redis:6379/0'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       CONNECTION_STRING: ${CONNECTION_STRING_DOCKER}
       ENVIRONMENT: 'PRODUCTION'
     depends_on:
